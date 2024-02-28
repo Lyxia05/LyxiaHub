@@ -19,7 +19,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 --
-local MobsFolder : Folder = workspace.Mobs
+local MobsFolder = workspace.Mobs
 
 
 
