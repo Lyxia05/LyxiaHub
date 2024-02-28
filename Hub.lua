@@ -88,7 +88,6 @@ local function TeleportToMob( Mob : Instance)
 	end
 
 	Character:PivotTo(Mob.CFrame * ConvertSettingsToCFrame())
-
 end
 
 local function TakeQuest()
@@ -123,12 +122,11 @@ end)
 -- Auto Farm Loops
 task.spawn(function()
 	while true do
-		print("here1")
 		if getgenv().AutoFarm == true then
-			print("here2")
 			local Mobs = GetMobs()
 
 			if Mobs then
+				print(Mobs)
 				getgenv().MobObject = Mobs
 				TeleportToMob(Mobs)
 			end
