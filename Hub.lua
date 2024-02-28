@@ -1,4 +1,4 @@
---
+-- SETTINGS --
 getgenv().Type = "Above"
 getgenv().Studs = 10
 getgenv().Mobs = {"None"}
