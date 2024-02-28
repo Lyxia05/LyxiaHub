@@ -123,7 +123,9 @@ end)
 -- Auto Farm Loops
 task.spawn(function()
 	while true do
+		print("here1")
 		if getgenv().AutoFarm == true then
+			print("here2")
 			local Mobs = GetMobs()
 
 			if Mobs then
