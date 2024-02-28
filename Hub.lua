@@ -1,4 +1,4 @@
---  
+--   
 type SETTINGS = {
 	Type : string,
 	Studs : number,
