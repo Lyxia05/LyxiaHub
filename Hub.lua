@@ -1,13 +1,29 @@
 -- 
-type Teleport = {
+type SETTINGS = {
 	Type : string,
-	Studs : number
+	Studs : number,
+	Mobs : {string},
+	Quest : number,
+	AutoFarm : boolean,
+	AutoQuest : boolean,
+	KillAura : boolean,
+	AutoCollect : boolean,
+	KillAuraDelay : number,
+	MobObject : Instance?,
 }
 
 -- SETTINGS --
-local TeleportSettings : Teleport = {
+local HUBSETTINGS : SETTINGS = {
 	Type = "Above",
-	Studs = 5
+	Studs = 10,
+	Mobs = {"None"},
+	Quest = 0,
+	AutoFarm = false,
+	AutoQuest = false,
+	KillAura = false,
+	AutoCollect = false,
+	KillAuraDelay = 0.5,
+	MobObject = "None",
 }
 
 
@@ -19,7 +35,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 --
-local RayfieldLibrary = loadstring(game:HttpGet('https://raw.githubusercontent.com/Lyxia1/LyxiaHub/main/UILIb.lua'))()
+local MobsFolder : Folder = workspace.Mobs
 
 
 
@@ -59,6 +75,10 @@ local function KillMob( Mob : Instance )
 	Event:FireServer(Mob)
 end
 
+local function GetMobs()
+	return MobsFolder:FindFirstChild(SETTINGS.Mobs)
+end
+
 local function ConvertSettingsToCFrame()
 	if TeleportSettings.Type == "Bellow" then
 		return CFrame.new(0, TeleportSettings.Studs * -1, 0)
@@ -78,15 +98,68 @@ local function TeleportToMob( Mob : Instance)
 
 end
 
-local function TakeQuest( QuestNumber : string )
+local function TakeQuest()
 	local Event = game:GetService("ReplicatedStorage").Systems.Quests.AcceptQuest
-	Event:FireServer(QuestNumber)
+	Event:FireServer(SETTINGS.Quest)
+end
+
+local function FinishQuest()
+	local Event = game:GetService("ReplicatedStorage").Systems.Quests.CompleteQuest
+	Event:FireServer(SETTINGS.Quest)
+end
+
+local function LootItems( Items : Instance )
+	local Event = game:GetService("ReplicatedStorage").Systems.Drops.Pickup
+	Event:FireServer(loot)
 end
 
 
 
+-- Kill Aura Loops
+task.spawn(function()
+	while true do
+		if SETTINGS.KillAura == true then
+			if typeof(SETTINGS.MobObject) == "instance" and SETTINGS.MobObject ~= nil then
+				KillMob(SETTINGS.MobObject)
+			end
+		end
+		task.wait(SETTINGS.KillAuraDelay)
+	end
+end)
 
---
+-- Auto Farm Loops
+task.spawn(function()
+	while true do
+		if SETTINGS.AutoFarm == true then
+			local Mobs = GetMobs()
+
+			if Mobs then
+				MobObject = Mobs
+				TeleportToMob(Mobs)
+			end
+
+		end
+		task.wait()
+	end
+end)
+
+-- Auto Quest Loops
+task.spawn(function()
+	while true do
+		if SETTINGS.AutoQuest == true then
+			TakeQuest()
+			FinishQuest()
+		end
+		task.wait(1)
+	end
+end)
+
+
+
+
+
+-- GUI SECTIONS
+local RayfieldLibrary = loadstring(game:HttpGet('https://raw.githubusercontent.com/Lyxia1/LyxiaHub/main/UILIb.lua'))()
 local Window = RayfieldLibrary:CreateWindow({
 	Name = "Lyxia Hub",
 	LoadingTitle = "Swordburst 3",
@@ -111,7 +184,7 @@ local QuestDropDown = AutofarmTab:CreateDropdown({
 	MultipleOptions = false,
 	Flag = "QuestDropDown",
 	Callback = function(Option)
-
+		SETTINGS.Quest = tonumber(Option)
 	end,
 })
 local MobDropDown = AutofarmTab:CreateDropdown({
@@ -121,7 +194,7 @@ local MobDropDown = AutofarmTab:CreateDropdown({
 	MultipleOptions = true,
 	Flag = "MobDropDown",
 	Callback = function(Option)
-
+		SETTINGS.Mob = Option
 	end,
 })
 local AutofarmToggle = AutofarmTab:CreateToggle({
@@ -129,7 +202,7 @@ local AutofarmToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "Autofarm",
 	Callback = function(Value)
-
+		SETTINGS.AutoFarm = Value
 	end,
 })
 local AutoquestToggle = AutofarmTab:CreateToggle({
@@ -137,7 +210,7 @@ local AutoquestToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "AutoQuest",
 	Callback = function(Value)
-
+		SETTINGS.AutoQuest = Value
 	end,
 })
 local AutofarmStudsSlider = AutofarmTab:CreateSlider({
@@ -147,7 +220,7 @@ local AutofarmStudsSlider = AutofarmTab:CreateSlider({
 	CurrentValue = 10,
 	Flag = "StudsSlider",
 	Callback = function(Value)
-		print(Value)
+		SETTINGS.Studs = Value
 	end,
 })
 local AutofarmTypeDropdown =AutofarmTab:CreateDropdown({
@@ -157,7 +230,7 @@ local AutofarmTypeDropdown =AutofarmTab:CreateDropdown({
 	MultipleOptions = false,
 	Flag = "TypeDropDown",
 	Callback = function(Option)
-
+		SETTINGS.Type = Value
 	end,
 })
 
@@ -168,7 +241,7 @@ local killauraToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "KAToggle",
 	Callback = function(Value)
-
+		SETTINGS.KillAura = Value
 	end,
 })
 local killauraDelaySlider = AutofarmTab:CreateSlider({
@@ -178,7 +251,7 @@ local killauraDelaySlider = AutofarmTab:CreateSlider({
 	CurrentValue = 0.5,
 	Flag = "KADelay",
 	Callback = function(Value)
-		print(Value)
+		SETTINGS.KillAuraDelay = Value
 	end,
 })
 
@@ -189,6 +262,6 @@ local AutoCollectToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "AutoCollectToggle",
 	Callback = function(Value)
-
+		SETTINGS.AutoCollect = Value
 	end,
 })
