@@ -1,14 +1,14 @@
--- SETTINGS - 
-getgenv().Type = "Above",
-getgenv().Studs = 10,
-getgenv().Mobs = {"None"},
-getgenv().Quest = 0,
-getgenv().AutoFarm = false,
-getgenv().AutoQuest = false,
-getgenv().KillAura = false,
-getgenv().AutoCollect = false,
-getgenv().KillAuraDelay = 0.5,
-getgenv().MobObject = "None",
+--
+getgenv().Type = "Above"
+getgenv().Studs = 10
+getgenv().Mobs = {"None"}
+getgenv().Quest = 0
+getgenv().AutoFarm = false
+getgenv().AutoQuest = false
+getgenv().KillAura = false
+getgenv().AutoCollect = false
+getgenv().KillAuraDelay = 0.5
+getgenv().MobObject = "None"
 
 
 --
@@ -19,7 +19,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 --
-local MobsFolder = workspace.Mobs
+local MobsFolder : Folder = workspace.Mobs
 
 
 
