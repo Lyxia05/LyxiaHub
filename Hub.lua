@@ -151,7 +151,7 @@ local AutofarmStudsSlider = AutofarmTab:CreateSlider({
 	end,
 })
 local AutofarmTypeDropdown =AutofarmTab:CreateDropdown({
-	Name = "Select Mob",
+	Name = "Type",
 	Options = {"Above", "Bellow"},
 	CurrentOption = {"Above"},
 	MultipleOptions = false,
