@@ -112,7 +112,7 @@ end
 task.spawn(function()
 	while true do
 		if getgenv().KillAura == true then
-			if typeof(getgenv().MobObject) == "instance" and getgenv().MobObject ~= nil then
+			if typeof(getgenv().MobObject) == "Instance" and getgenv().MobObject ~= nil then
 				KillMob(getgenv().MobObject)
 			end
 		end
