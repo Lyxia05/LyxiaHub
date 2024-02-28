@@ -19,7 +19,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 --
-local RayfieldLibrary = loadstring(game:HttpGet('https://raw.githubusercontent.com/Lyxia1/LyxiaHub/main/UILIb.lua'))()
+local RayfieldLibrary = loadstring(game:HttpGet('https://pastebin.com/raw/8uJgew2c'))()
 
 
 
@@ -137,6 +137,26 @@ local AutoquestToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "AutoQuest",
 	Callback = function(Value)
+
+	end,
+})
+local AutofarmStudsSlider = AutofarmTab:CreateSlider({
+	Name = "Studs",
+	Range = {1, 10},
+	Increment = 1,
+	CurrentValue = 10,
+	Flag = "StudsSlider",
+	Callback = function(Value)
+		print(Value)
+	end,
+})
+local AutofarmTypeDropdown =AutofarmTab:CreateDropdown({
+	Name = "Select Mob",
+	Options = {"Above", "Bellow"},
+	CurrentOption = {"Above"},
+	MultipleOptions = false,
+	Flag = "TypeDropDown",
+	Callback = function(Option)
 
 	end,
 })
