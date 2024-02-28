@@ -113,9 +113,10 @@ task.spawn(function()
 		if getgenv().KillAura == true then
 			if typeof(getgenv().MobObject) == "Instance" and getgenv().MobObject ~= nil then
 				KillMob(getgenv().MobObject)
+				task.wait(getgenv().KillAuraDelay)
 			end
 		end
-		task.wait(getgenv().KillAuraDelay)
+		task.wait()
 	end
 end)
 
