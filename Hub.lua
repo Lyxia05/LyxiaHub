@@ -1,30 +1,14 @@
--- SETTINGS
-type SETTINGS = {
-	Type : string,
-	Studs : number,
-	Mobs : {string},
-	Quest : number,
-	AutoFarm : boolean,
-	AutoQuest : boolean,
-	KillAura : boolean,
-	AutoCollect : boolean,
-	KillAuraDelay : number,
-	MobObject : Instance?,
-}
-
--- SETTINGS --
-local HUBSETTINGS : SETTINGS = {
-	Type = "Above",
-	Studs = 10,
-	Mobs = {"None"},
-	Quest = 0,
-	AutoFarm = false,
-	AutoQuest = false,
-	KillAura = false,
-	AutoCollect = false,
-	KillAuraDelay = 0.5,
-	MobObject = "None",
-}
+--
+getgenv().Type = "Above",
+getgenv().Studs = 10,
+getgenv().Mobs = {"None"},
+getgenv().Quest = 0,
+getgenv().AutoFarm = false,
+getgenv().AutoQuest = false,
+getgenv().KillAura = false,
+getgenv().AutoCollect = false,
+getgenv().KillAuraDelay = 0.5,
+getgenv().MobObject = "None",
 
 
 --
@@ -76,14 +60,14 @@ local function KillMob( Mob : Instance )
 end
 
 local function GetMobs()
-	return MobsFolder:FindFirstChild(HUBSETTINGS.Mobs)
+	return MobsFolder:FindFirstChild(getgenv().Mobs)
 end
 
 local function ConvertSettingsToCFrame()
-	if HUBSETTINGS.Type == "Bellow" then
-		return CFrame.new(0, HUBSETTINGS.Studs * -1, 0)
+	if getgenv().Type == "Bellow" then
+		return CFrame.new(0, getgenv().Studs * -1, 0)
 	else
-		return CFrame.new(0, HUBSETTINGS.Studs, 0)
+		return CFrame.new(0, getgenv().Studs, 0)
 	end
 end
 
@@ -100,12 +84,12 @@ end
 
 local function TakeQuest()
 	local Event = game:GetService("ReplicatedStorage").Systems.Quests.AcceptQuest
-	Event:FireServer(HUBSETTINGS.Quest)
+	Event:FireServer(getgenv().Quest)
 end
 
 local function FinishQuest()
 	local Event = game:GetService("ReplicatedStorage").Systems.Quests.CompleteQuest
-	Event:FireServer(HUBSETTINGS.Quest)
+	Event:FireServer(getgenv().Quest)
 end
 
 local function LootItems( Items : Instance )
@@ -118,23 +102,23 @@ end
 -- Kill Aura Loops
 task.spawn(function()
 	while true do
-		if HUBSETTINGS.KillAura == true then
-			if typeof(HUBSETTINGS.MobObject) == "instance" and HUBSETTINGS.MobObject ~= nil then
-				KillMob(HUBSETTINGS.MobObject)
+		if getgenv().KillAura == true then
+			if typeof(getgenv().MobObject) == "instance" and getgenv().MobObject ~= nil then
+				KillMob(getgenv().MobObject)
 			end
 		end
-		task.wait(HUBSETTINGS.KillAuraDelay)
+		task.wait(getgenv().KillAuraDelay)
 	end
 end)
 
 -- Auto Farm Loops
 task.spawn(function()
 	while true do
-		if HUBSETTINGS.AutoFarm == true then
+		if getgenv().AutoFarm == true then
 			local Mobs = GetMobs()
 
 			if Mobs then
-				MobObject = Mobs
+				getgenv().MobObject = Mobs
 				TeleportToMob(Mobs)
 			end
 
@@ -146,7 +130,7 @@ end)
 -- Auto Quest Loops
 task.spawn(function()
 	while true do
-		if HUBSETTINGS.AutoQuest == true then
+		if getgenv().AutoQuest == true then
 			TakeQuest()
 			FinishQuest()
 		end
@@ -184,7 +168,7 @@ local QuestDropDown = AutofarmTab:CreateDropdown({
 	MultipleOptions = false,
 	Flag = "QuestDropDown",
 	Callback = function(Option)
-		HUBSETTINGS.Quest = tonumber(Option)
+		getgenv().Quest = tonumber(Option)
 	end,
 })
 local MobDropDown = AutofarmTab:CreateDropdown({
@@ -194,7 +178,7 @@ local MobDropDown = AutofarmTab:CreateDropdown({
 	MultipleOptions = true,
 	Flag = "MobDropDown",
 	Callback = function(Option)
-		HUBSETTINGS.Mob = Option
+		getgenv().Mob = Option
 	end,
 })
 local AutofarmToggle = AutofarmTab:CreateToggle({
@@ -202,7 +186,7 @@ local AutofarmToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "Autofarm",
 	Callback = function(Value)
-		HUBSETTINGS.AutoFarm = Value
+		getgenv().AutoFarm = Value
 	end,
 })
 local AutoquestToggle = AutofarmTab:CreateToggle({
@@ -210,7 +194,7 @@ local AutoquestToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "AutoQuest",
 	Callback = function(Value)
-		HUBSETTINGS.AutoQuest = Value
+		getgenv().AutoQuest = Value
 	end,
 })
 local AutofarmStudsSlider = AutofarmTab:CreateSlider({
@@ -220,7 +204,7 @@ local AutofarmStudsSlider = AutofarmTab:CreateSlider({
 	CurrentValue = 10,
 	Flag = "StudsSlider",
 	Callback = function(Value)
-		HUBSETTINGS.Studs = Value
+		getgenv().Studs = Value
 	end,
 })
 local AutofarmTypeDropdown =AutofarmTab:CreateDropdown({
@@ -230,7 +214,7 @@ local AutofarmTypeDropdown =AutofarmTab:CreateDropdown({
 	MultipleOptions = false,
 	Flag = "TypeDropDown",
 	Callback = function(Option)
-		HUBSETTINGS.Type = Value
+		getgenv().Type = Value
 	end,
 })
 
@@ -241,7 +225,7 @@ local killauraToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "KAToggle",
 	Callback = function(Value)
-		HUBSETTINGS.KillAura = Value
+		getgenv().KillAura = Value
 	end,
 })
 local killauraDelaySlider = AutofarmTab:CreateSlider({
@@ -251,7 +235,7 @@ local killauraDelaySlider = AutofarmTab:CreateSlider({
 	CurrentValue = 0.5,
 	Flag = "KADelay",
 	Callback = function(Value)
-		HUBSETTINGS.KillAuraDelay = Value
+		getgenv().KillAuraDelay = Value
 	end,
 })
 
@@ -262,6 +246,6 @@ local AutoCollectToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "AutoCollectToggle",
 	Callback = function(Value)
-		HUBSETTINGS.AutoCollect = Value
+		getgenv().AutoCollect = Value
 	end,
 })
