@@ -1,4 +1,4 @@
--- SETTINGS --
+--
 getgenv().Type = "Above"
 getgenv().Studs = 10
 getgenv().Mobs = {"None"}
@@ -60,7 +60,16 @@ local function KillMob( Mob : Instance )
 end
 
 local function GetMobs()
-	return MobsFolder:FindFirstChild(getgenv().Mobs)
+	local result = nil
+
+	for _, value in getgenv().Mobs do
+		local Mobs = MobsFolder:FindFirstChild(value)
+		if Mobs then
+			result = Mobs
+		end
+	end
+
+	return result
 end
 
 local function ConvertSettingsToCFrame()
