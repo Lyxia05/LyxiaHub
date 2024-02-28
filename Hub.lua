@@ -81,14 +81,14 @@ local function ConvertSettingsToCFrame()
 	end
 end
 
-local function TeleportToMob( Mob : Instance)
+local function TeleportToMob( Mob : Instance )
 	local Character = GetCharacter()
 
 	if not Character then
 		return
 	end
 
-	Character:PivotTo(Mob.CFrame * ConvertSettingsToCFrame())
+	Character:PivotTo(Mob.HumanoidRootPart.CFrame * ConvertSettingsToCFrame())
 end
 
 local function TakeQuest()
