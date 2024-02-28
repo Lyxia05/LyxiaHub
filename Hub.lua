@@ -1,4 +1,4 @@
---
+-- 
 type Teleport = {
 	Type : string,
 	Studs : number
