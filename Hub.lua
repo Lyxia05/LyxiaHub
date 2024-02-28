@@ -151,7 +151,7 @@ end)
 
 
 -- GUI SECTIONS
-local RayfieldLibrary = loadstring(game:HttpGet('https://raw.githubusercontent.com/Lyxia1/LyxiaHub/main/Hub.lua'))()
+local RayfieldLibrary = loadstring(game:HttpGet('https://raw.githubusercontent.com/Lyxia1/LyxiaHub/main/UILIb.lua'))()
 local Window = RayfieldLibrary:CreateWindow({
 	Name = "Lyxia Hub",
 	LoadingTitle = "Swordburst 3",
