@@ -63,7 +63,6 @@ local function GetMobs()
 	local result = nil
 
 	for _, value in getgenv().Mobs do
-		print(value)
 		local Mobs = MobsFolder:FindFirstChild(value)
 		if Mobs then
 			result = Mobs
@@ -127,7 +126,6 @@ task.spawn(function()
 			local Mobs = GetMobs()
 
 			if Mobs then
-				print(Mobs)
 				getgenv().MobObject = Mobs
 				TeleportToMob(Mobs)
 			end
@@ -153,7 +151,7 @@ end)
 
 
 -- GUI SECTIONS
-local RayfieldLibrary = loadstring(game:HttpGet('https://raw.githubusercontent.com/Lyxia1/LyxiaHub/main/UILIb.lua'))()
+local RayfieldLibrary = loadstring(game:HttpGet('https://raw.githubusercontent.com/Lyxia1/LyxiaHub/main/Hub.lua'))()
 local Window = RayfieldLibrary:CreateWindow({
 	Name = "Lyxia Hub",
 	LoadingTitle = "Swordburst 3",
