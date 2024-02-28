@@ -76,14 +76,14 @@ local function KillMob( Mob : Instance )
 end
 
 local function GetMobs()
-	return MobsFolder:FindFirstChild(SETTINGS.Mobs)
+	return MobsFolder:FindFirstChild(HUBSETTINGS.Mobs)
 end
 
 local function ConvertSettingsToCFrame()
-	if TeleportSettings.Type == "Bellow" then
-		return CFrame.new(0, TeleportSettings.Studs * -1, 0)
+	if HUBSETTINGS.Type == "Bellow" then
+		return CFrame.new(0, HUBSETTINGS.Studs * -1, 0)
 	else
-		return CFrame.new(0, TeleportSettings.Studs, 0)
+		return CFrame.new(0, HUBSETTINGS.Studs, 0)
 	end
 end
 
@@ -100,12 +100,12 @@ end
 
 local function TakeQuest()
 	local Event = game:GetService("ReplicatedStorage").Systems.Quests.AcceptQuest
-	Event:FireServer(SETTINGS.Quest)
+	Event:FireServer(HUBSETTINGS.Quest)
 end
 
 local function FinishQuest()
 	local Event = game:GetService("ReplicatedStorage").Systems.Quests.CompleteQuest
-	Event:FireServer(SETTINGS.Quest)
+	Event:FireServer(HUBSETTINGS.Quest)
 end
 
 local function LootItems( Items : Instance )
@@ -118,19 +118,19 @@ end
 -- Kill Aura Loops
 task.spawn(function()
 	while true do
-		if SETTINGS.KillAura == true then
-			if typeof(SETTINGS.MobObject) == "instance" and SETTINGS.MobObject ~= nil then
-				KillMob(SETTINGS.MobObject)
+		if HUBSETTINGS.KillAura == true then
+			if typeof(HUBSETTINGS.MobObject) == "instance" and HUBSETTINGS.MobObject ~= nil then
+				KillMob(HUBSETTINGS.MobObject)
 			end
 		end
-		task.wait(SETTINGS.KillAuraDelay)
+		task.wait(HUBSETTINGS.KillAuraDelay)
 	end
 end)
 
 -- Auto Farm Loops
 task.spawn(function()
 	while true do
-		if SETTINGS.AutoFarm == true then
+		if HUBSETTINGS.AutoFarm == true then
 			local Mobs = GetMobs()
 
 			if Mobs then
@@ -146,7 +146,7 @@ end)
 -- Auto Quest Loops
 task.spawn(function()
 	while true do
-		if SETTINGS.AutoQuest == true then
+		if HUBSETTINGS.AutoQuest == true then
 			TakeQuest()
 			FinishQuest()
 		end
@@ -184,7 +184,7 @@ local QuestDropDown = AutofarmTab:CreateDropdown({
 	MultipleOptions = false,
 	Flag = "QuestDropDown",
 	Callback = function(Option)
-		SETTINGS.Quest = tonumber(Option)
+		HUBSETTINGS.Quest = tonumber(Option)
 	end,
 })
 local MobDropDown = AutofarmTab:CreateDropdown({
@@ -194,7 +194,7 @@ local MobDropDown = AutofarmTab:CreateDropdown({
 	MultipleOptions = true,
 	Flag = "MobDropDown",
 	Callback = function(Option)
-		SETTINGS.Mob = Option
+		HUBSETTINGS.Mob = Option
 	end,
 })
 local AutofarmToggle = AutofarmTab:CreateToggle({
@@ -202,7 +202,7 @@ local AutofarmToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "Autofarm",
 	Callback = function(Value)
-		SETTINGS.AutoFarm = Value
+		HUBSETTINGS.AutoFarm = Value
 	end,
 })
 local AutoquestToggle = AutofarmTab:CreateToggle({
@@ -210,7 +210,7 @@ local AutoquestToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "AutoQuest",
 	Callback = function(Value)
-		SETTINGS.AutoQuest = Value
+		HUBSETTINGS.AutoQuest = Value
 	end,
 })
 local AutofarmStudsSlider = AutofarmTab:CreateSlider({
@@ -220,7 +220,7 @@ local AutofarmStudsSlider = AutofarmTab:CreateSlider({
 	CurrentValue = 10,
 	Flag = "StudsSlider",
 	Callback = function(Value)
-		SETTINGS.Studs = Value
+		HUBSETTINGS.Studs = Value
 	end,
 })
 local AutofarmTypeDropdown =AutofarmTab:CreateDropdown({
@@ -230,7 +230,7 @@ local AutofarmTypeDropdown =AutofarmTab:CreateDropdown({
 	MultipleOptions = false,
 	Flag = "TypeDropDown",
 	Callback = function(Option)
-		SETTINGS.Type = Value
+		HUBSETTINGS.Type = Value
 	end,
 })
 
@@ -241,7 +241,7 @@ local killauraToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "KAToggle",
 	Callback = function(Value)
-		SETTINGS.KillAura = Value
+		HUBSETTINGS.KillAura = Value
 	end,
 })
 local killauraDelaySlider = AutofarmTab:CreateSlider({
@@ -251,7 +251,7 @@ local killauraDelaySlider = AutofarmTab:CreateSlider({
 	CurrentValue = 0.5,
 	Flag = "KADelay",
 	Callback = function(Value)
-		SETTINGS.KillAuraDelay = Value
+		HUBSETTINGS.KillAuraDelay = Value
 	end,
 })
 
@@ -262,6 +262,6 @@ local AutoCollectToggle = AutofarmTab:CreateToggle({
 	CurrentValue = false,
 	Flag = "AutoCollectToggle",
 	Callback = function(Value)
-		SETTINGS.AutoCollect = Value
+		HUBSETTINGS.AutoCollect = Value
 	end,
 })
