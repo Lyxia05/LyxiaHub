@@ -188,7 +188,7 @@ local MobDropDown = AutofarmTab:CreateDropdown({
 	MultipleOptions = true,
 	Flag = "MobDropDown",
 	Callback = function(Option)
-		getgenv().Mob = Option
+		getgenv().Mobs = Option
 	end,
 })
 local AutofarmToggle = AutofarmTab:CreateToggle({
