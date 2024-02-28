@@ -63,6 +63,7 @@ local function GetMobs()
 	local result = nil
 
 	for _, value in getgenv().Mobs do
+		print(value)
 		local Mobs = MobsFolder:FindFirstChild(value)
 		if Mobs then
 			result = Mobs
