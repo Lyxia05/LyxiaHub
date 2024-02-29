@@ -93,8 +93,13 @@ end
 
 local function TeleportToMob( Mob : Instance )
 	local Character = GetCharacter()
+	local MobHRP = Mob:FindFirstChild("HumanoidRootPart")
 
 	if not Character then
+		return
+	end
+	
+	if not MobHRP then
 		return
 	end
 
