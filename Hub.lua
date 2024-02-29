@@ -86,7 +86,13 @@ local function TeleportToMob( Mob )
 		return
 	end
 
-	Character:PivotTo(Mob.HumanoidRootPart.CFrame * ConvertSettingsToCFrame())
+	local mobHRP = Mob:FindFirstChild("HumanoidRootPart")
+
+	if not mobHRP then
+		return
+	end
+
+	Character:PivotTo(mobHRP.CFrame * ConvertSettingsToCFrame())
 end
 
 local function TakeQuest()
