@@ -120,6 +120,7 @@ end)
 task.spawn(function()
 	while getgenv().KillAura == true do
 		KillMob()
+		print("Hello")
 		task.wait(getgenv().KillAuraDelay)
 	end
 end)
