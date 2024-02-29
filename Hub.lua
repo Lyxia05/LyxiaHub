@@ -1,4 +1,4 @@
--- SETTINGS --
+--
 getgenv().Type = "Above"
 getgenv().Studs = 10
 getgenv().Mobs = {"None"}
@@ -59,7 +59,7 @@ local function KillMob()
 	local Event = game:GetService("ReplicatedStorage").Systems.Combat.PlayerAttack
 	for index, mob in pairs(MobsFolder:GetChildren()) do
 		local Character = GetCharacter()
-		local MobHRP = mob:FindFirstChild("HumanoidRootPart"
+		local MobHRP = mob:FindFirstChild("HumanoidRootPart")
 		if Character and MobHRP then
 			local Range = (Character.HumanoidRootPart.Position - MobHRP.Position).Magnitude
 			if Range <= 50 then
