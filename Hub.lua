@@ -54,9 +54,16 @@ local function GetCharacter()
 	return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 end
 
-local function KillMob( Mob : Instance )
-	local Event = game:GetService("ReplicatedStorage").Systems.Combat.PlayerAttack
-	Event:FireServer(Mob)
+local function KillMob()
+	for index, mob in pairs(MobsFolder:GetChildren()) do
+		local Character = GetCharacter()
+		if Character then
+			local Range = (Character.HumanoidRootPart.Position - mob.HumanoidRootPart.Position).Magnitude
+			if Range <= 50 then
+				Event:FireServer(mob)
+			end
+		end
+	end
 end
 
 local function GetMobs()
@@ -111,12 +118,9 @@ end
 task.spawn(function()
 	while true do
 		if getgenv().KillAura == true then
-			if typeof(getgenv().MobObject) == "Instance" and getgenv().MobObject ~= nil then
-				KillMob(getgenv().MobObject)
-				task.wait(getgenv().KillAuraDelay)
-			end
+			KillMob()
 		end
-		task.wait()
+		task.wait(getgenv().KillAuraDelay)
 	end
 end)
 
