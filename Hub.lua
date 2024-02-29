@@ -137,7 +137,7 @@ task.spawn(function()
 					getgenv().MobObject = GetMobs()
 				end
 
-			else getgenv().MobObject == nil or getgenv().MobObject == "None"  then
+			else getgenv().MobObject == nil or getgenv().MobObject == "None" then
 				getgenv().MobObject = GetMobs()
 			end
 
