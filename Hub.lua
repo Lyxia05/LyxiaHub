@@ -91,8 +91,8 @@ end
 
 local function AutoFarm()
 	for _, value in getgenv().Mobs do
-		for _, value2 in MobsFolder:GetChildren() do
-			if value2.Name:find(value.Name) then
+		for _, value2 in pairs(MobsFolder:GetChildren()) do
+			if value2.Name:find(value) then
 				local Mobs = MobsFolder:FindFirstChild(value)
 				if Mobs then
 					local MobHRP = Mobs:FindFirstChild("HumanoidRootPart")
