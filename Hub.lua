@@ -91,11 +91,15 @@ end
 
 local function AutoFarm()
 	for _, value in getgenv().Mobs do
-		local Mobs = MobsFolder:FindFirstChild(value)
-		if Mobs then
-			local MobHRP = Mobs:FindFirstChild("HumanoidRootPart")
-			if MobHRP then
-				TeleportToMob( Mobs )
+		for _, value2 in MobsFolder:GetChildren() do
+			if value2.Name:find(value.Name) then
+				local Mobs = MobsFolder:FindFirstChild(value)
+				if Mobs then
+					local MobHRP = Mobs:FindFirstChild("HumanoidRootPart")
+					if MobHRP and MobHRP.Transparency == 0 then
+						TeleportToMob( Mobs )
+					end
+				end
 			end
 		end
 	end
