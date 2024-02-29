@@ -56,24 +56,19 @@ end
 
 local function KillMob()
 	local Event = game:GetService("ReplicatedStorage").Systems.Combat.PlayerAttack
-	if getgenv().MobObject ~= nil then
-		Event:FireServer({
-			getgenv().MobObject
-		})
-	end
-end
+	local result = {}
 
-local function GetMobs()
-	for _, value in getgenv().Mobs do
-		local Mobs = MobsFolder:FindFirstChild(value)
-		if Mobs then
-			local MobHRP = Mobs:FindFirstChild("HumanoidRootPart")
-			if MobHRP then
-				getgenv().MobObject = Mobs
-				break
+	for index, value in MobsFolder:GetChildren() do
+		local Character = GetCharacter()
+		local mobHRP = value:FindFirstChild("HumanoidRootPart")
+		if Character and mobHRP then
+			local Distance = (Character.HumanoidRootPart.Position - mobHRP.Position).Magnitude
+			if Distance <= 50 then
+				table.insert(result, value)
 			end
 		end
 	end
+	Event:FireServer(result)
 end
 
 local function ConvertSettingsToCFrame()
@@ -84,19 +79,26 @@ local function ConvertSettingsToCFrame()
 	end
 end
 
-local function TeleportToMob()
+local function TeleportToMob( Mob )
 	local Character = GetCharacter()
-	local MobHRP = getgenv().MobObject:FindFirstChild("HumanoidRootPart")
 
 	if not Character then
 		return
 	end
 
-	if not MobHRP then
-		return
-	end
+	Character:PivotTo(Mob.HumanoidRootPart.CFrame * ConvertSettingsToCFrame())
+end
 
-	Character:PivotTo(getgenv().MobObject.HumanoidRootPart.CFrame * ConvertSettingsToCFrame())
+local function AutoFarm()
+	for _, value in getgenv().Mobs do
+		local Mobs = MobsFolder:FindFirstChild(value)
+		if Mobs then
+			local MobHRP = Mobs:FindFirstChild("HumanoidRootPart")
+			if MobHRP then
+				TeleportToMob( value )
+			end
+		end
+	end
 end
 
 local function TakeQuest()
@@ -130,10 +132,7 @@ end)
 task.spawn(function()
 	while true do
 		if getgenv().AutoFarm == true then
-			GetMobs()
-			if typeof(getgenv().MobObject) == "Instance" and getgenv().MobObject ~= nil then
-				TeleportToMob()
-			end
+			AutoFarm()
 		end
 		task.wait()
 	end
