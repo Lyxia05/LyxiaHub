@@ -89,22 +89,6 @@ local function TeleportToMob( Mob )
 	Character:PivotTo(Mob.HumanoidRootPart.CFrame * ConvertSettingsToCFrame())
 end
 
-local function AutoFarm()
-	for _, value in getgenv().Mobs do
-		for _, value2 in pairs(MobsFolder:GetChildren()) do
-			if value2.Name:find(value) then
-				local Mobs = MobsFolder:FindFirstChild(value)
-				if Mobs then
-					local MobHRP = Mobs:FindFirstChild("HumanoidRootPart")
-					if MobHRP and MobHRP.Transparency == 0 then
-						TeleportToMob( Mobs )
-					end
-				end
-			end
-		end
-	end
-end
-
 local function TakeQuest()
 	local Event = game:GetService("ReplicatedStorage").Systems.Quests.AcceptQuest
 	Event:FireServer(getgenv().Quest)
@@ -114,6 +98,37 @@ local function FinishQuest()
 	local Event = game:GetService("ReplicatedStorage").Systems.Quests.CompleteQuest
 	Event:FireServer(getgenv().Quest)
 end
+
+local function AutoFarm()
+	if getgenv().AutoFarm == false then
+		return
+	end
+
+	for _, value in pairs(MobsFolder:GetChildren()) do
+		if value.Name:match(getgenv().Mobs[1]) then
+			local MobHRP = value:FindFirstChild("HumanoidRootPart")
+			if MobHRP and MobHRP.Transparency == 0 then
+				TeleportToMob(value)
+			end
+		end
+	end
+end
+
+local function KillAura()
+	if getgenv().KillAura == false then
+		return
+	end
+
+	KillMob()
+	task.wait(getgenv().KillAuraDelay)
+end
+
+local function AutoQuest()
+	TakeQuest()
+	FinishQuest()
+end
+
+
 
 
 -- Auto Loot
@@ -133,19 +148,15 @@ end)
 -- Kill Aura Loops
 task.spawn(function()
 	while true do
-		if getgenv().KillAura == true then
-			KillMob()
-		end
-		task.wait(getgenv().KillAuraDelay)
+		KillAura()
+		task.wait()
 	end
 end)
 
 -- Auto Farm Loops
 task.spawn(function()
 	while true do
-		if getgenv().AutoFarm == true then
-			AutoFarm()
-		end
+		AutoFarm()
 		task.wait()
 	end
 end)
@@ -153,10 +164,7 @@ end)
 -- Auto Quest Loops
 task.spawn(function()
 	while true do
-		if getgenv().AutoQuest == true then
-			TakeQuest()
-			FinishQuest()
-		end
+		AutoQuest()
 		task.wait(1)
 	end
 end)
@@ -198,7 +206,7 @@ local MobDropDown = AutofarmTab:CreateDropdown({
 	Name = "Select Mob",
 	Options = GetMobList(),
 	CurrentOption = {"None"},
-	MultipleOptions = true,
+	MultipleOptions = false,
 	Flag = "MobDropDown",
 	Callback = function(Option)
 		getgenv().Mobs = Option
