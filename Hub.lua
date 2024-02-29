@@ -8,7 +8,7 @@ getgenv().AutoQuest = false
 getgenv().KillAura = false
 getgenv().AutoCollect = false
 getgenv().KillAuraDelay = 0.5
-getgenv().MobObject = "None"
+getgenv().MobObject = nil
 
 
 --
@@ -91,7 +91,7 @@ local function TeleportToMob( Mob : Instance )
 	if not Character then
 		return
 	end
-	
+
 	if not MobHRP then
 		return
 	end
@@ -111,7 +111,7 @@ end
 
 local function LootItems( Items : Instance )
 	local Event = game:GetService("ReplicatedStorage").Systems.Drops.Pickup
-	Event:FireServer(loot)
+	Event:FireServer(Items)
 end
 
 
@@ -131,7 +131,7 @@ task.spawn(function()
 	while true do
 		if getgenv().AutoFarm == true then
 			if getgenv().MobObject ~= nil or getgenv().MobObject ~= "None" then
-				TeleportToMob(Mobs)
+				TeleportToMob(getgenv().MobObject)
 
 				if getgenv().MobObject.HealthBar.Frame.HPBar.Fill.Bar.Size.Scale.X == 0 then
 					getgenv().MobObject = GetMobs()
