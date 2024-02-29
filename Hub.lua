@@ -166,6 +166,10 @@ task.spawn(function()
 	end
 end)
 
+LocalPlayer.Idled:Connect(function()
+	game:GetService("VirtualUser"):ClickButton2(Vector2.new())
+end)
+
 
 
 
