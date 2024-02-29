@@ -231,7 +231,7 @@ local AutofarmTypeDropdown =AutofarmTab:CreateDropdown({
 	MultipleOptions = false,
 	Flag = "TypeDropDown",
 	Callback = function(Option)
-		getgenv().Type = Value
+		getgenv().Type = Option
 	end,
 })
 
