@@ -67,7 +67,11 @@ local function GetMobs()
 	for _, value in getgenv().Mobs do
 		local Mobs = MobsFolder:FindFirstChild(value)
 		if Mobs then
-			getgenv().MobObject = Mobs
+			local MobHRP = Mobs:FindFirstChild("HumanoidRootPart")
+			if MobHRP then
+				getgenv().MobObject = Mobs
+				break
+			end
 		end
 	end
 end
