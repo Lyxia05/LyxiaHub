@@ -8,7 +8,7 @@ getgenv().AutoQuest = false
 getgenv().KillAura = false
 getgenv().AutoCollect = false
 getgenv().KillAuraDelay = 0.5
-getgenv().MobObject = nil
+getgenv().MobObject = "None"
 
 
 --
