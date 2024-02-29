@@ -130,14 +130,16 @@ end)
 task.spawn(function()
 	while true do
 		if getgenv().AutoFarm == true then
-			for _, value in getgenv().Mobs do
-				local Mobs = MobsFolder:FindFirstChild(value) or MobsFolder:FindFirstChild("Giant " .. value)
-				if Mobs then
-					local HumanoidRootPart = Mobs:FindFirstChild("HumanoidRootPart")
-					local HealthBar = Mobs:FindFirstChild("Healthbar")
-					if HumanoidRootPart and HealthBar then
-						TeleportToMob(Mobs)
+			for _, value in pairs(MobsFolder:GetChildren()) do
+				for _, value2 in getgenv().Mobs do
+					if value.Name:find(value2) then
+						local HumanoidRootPart = value:FindFirstChild("HumanoidRootPart")
+						local HealthBar = value:FindFirstChild("Healthbar")
+						if HumanoidRootPart and HealthBar then
+							TeleportToMob(value)
+						end
 					end
+
 				end
 			end
 		end
