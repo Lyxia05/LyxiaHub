@@ -95,7 +95,7 @@ local function AutoFarm()
 		if Mobs then
 			local MobHRP = Mobs:FindFirstChild("HumanoidRootPart")
 			if MobHRP then
-				TeleportToMob( value )
+				TeleportToMob( Mobs )
 			end
 		end
 	end
