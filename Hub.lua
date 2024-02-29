@@ -8,7 +8,7 @@ getgenv().AutoQuest = false
 getgenv().KillAura = false
 getgenv().AutoCollect = false
 getgenv().KillAuraDelay = 0.5
-getgenv().MobObject = nil
+getgenv().MobObject = "None"
 
 
 --
@@ -130,14 +130,14 @@ end)
 task.spawn(function()
 	while true do
 		if getgenv().AutoFarm == true then
-			if getgenv().MobObject ~= nil then
+			if getgenv().MobObject ~= nil or getgenv().MobObject ~= "None" then
 				TeleportToMob(Mobs)
 
 				if getgenv().MobObject.HealthBar.Frame.HPBar.Fill.Bar.Size.Scale.X == 0 then
 					getgenv().MobObject = GetMobs()
 				end
 
-			else
+			else getgenv().MobObject == nil or getgenv().MobObject == "None"  then
 				getgenv().MobObject = GetMobs()
 			end
 
