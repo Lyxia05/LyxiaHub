@@ -118,22 +118,26 @@ end)
 
 -- Kill Aura Loops
 task.spawn(function()
-	while getgenv().KillAura == true do
-		KillMob()
-		print("Hello")
+	while true do
+		if getgenv().KillAura == true then
+			KillMob()
+			print("Hello")
+		end
 		task.wait(getgenv().KillAuraDelay)
 	end
 end)
 
 -- Auto Farm Loops
 task.spawn(function()
-	while getgenv().AutoFarm == true do
-		for _, value in getgenv().Mobs do
-			local Mobs = MobsFolder:FindFirstChild(value) or MobsFolder:FindFirstChild("Giant " .. value)
-			if Mobs then
-				local HumanoidRootPart = Mobs:FindFirstChild("HumanoidRootPart")
-				if HumanoidRootPart and HumanoidRootPart.Transparency == 0 then
-					TeleportToMob(Mobs)
+	while true do
+		if getgenv().AutoFarm == true then
+			for _, value in getgenv().Mobs do
+				local Mobs = MobsFolder:FindFirstChild(value) or MobsFolder:FindFirstChild("Giant " .. value)
+				if Mobs then
+					local HumanoidRootPart = Mobs:FindFirstChild("HumanoidRootPart")
+					if HumanoidRootPart and HumanoidRootPart.Transparency == 0 then
+						TeleportToMob(Mobs)
+					end
 				end
 			end
 		end
@@ -143,9 +147,11 @@ end)
 
 -- Auto Quest Loops
 task.spawn(function()
-	while getgenv().AutoQuest == true do
-		TakeQuest()
-		FinishQuest()
+	while true do
+		if getgenv().AutoQuest == true then
+			TakeQuest()
+			FinishQuest()
+		end
 		task.wait()
 	end
 end)
