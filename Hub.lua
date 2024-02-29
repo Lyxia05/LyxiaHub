@@ -124,7 +124,7 @@ task.spawn(function()
 		if getgenv().KillAura == true then
 			KillMob()
 		end
-		task.wait(getgenv(.KillAuraDelay))
+		task.wait(getgenv().KillAuraDelay)
 	end
 end)
 
