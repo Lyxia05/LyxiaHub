@@ -204,7 +204,7 @@ local QuestDropDown = AutofarmTab:CreateDropdown({
 	MultipleOptions = false,
 	Flag = "QuestDropDown",
 	Callback = function(Option)
-		getgenv().Quest = tonumber(Option)
+		getgenv().Quest = tonumber(Option[1])
 	end,
 })
 local MobDropDown = AutofarmTab:CreateDropdown({
