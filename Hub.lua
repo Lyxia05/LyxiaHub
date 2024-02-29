@@ -113,6 +113,7 @@ local function GetMob()
 				local HealthBar = value:FindFirstChild("Healthbar")
 				if HumanoidRootPart and HealthBar then
 					getgenv().MobObject = value
+					break
 				end
 			end
 
@@ -284,4 +285,27 @@ local AutoCollectToggle = AutofarmTab:CreateToggle({
 	Callback = function(Value)
 		getgenv().AutoCollect = Value
 	end,
+})
+
+-- Server Hop
+local ServerHopButton = TeleportTab:CreateButton({
+	Name = "Teleport Low player server",
+	Callback = function ()
+		local TeleportService = game:GetService("TeleportService")
+		local HttpService = game:GetService("HttpService")
+		local Site = HttpService:JSONDecode(game.HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Asc&limit=100"))
+
+		local result = ""
+
+		for i,v in pairs(Site.data) do
+			if result ~= "" then
+				break
+			end
+	
+			if v.playing <= 2 then 
+				result = v.id
+			end
+		end
+		TeleportService:TeleportToPlaceInstance(game.PlaceId, result, game.Players.LocalPlayer)
+	end
 })
