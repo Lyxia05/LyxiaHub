@@ -64,16 +64,13 @@ local function KillMob()
 end
 
 local function GetMobs()
-	local result = nil
-
 	for _, value in getgenv().Mobs do
 		local Mobs = MobsFolder:FindFirstChild(value)
 		if Mobs then
-			result = Mobs
+			getgenv().MobObject = Mobs
+			break
 		end
 	end
-
-	return result
 end
 
 local function ConvertSettingsToCFrame()
@@ -84,19 +81,19 @@ local function ConvertSettingsToCFrame()
 	end
 end
 
-local function TeleportToMob( Mob )
+local function TeleportToMob()
 	local Character = GetCharacter()
-	local MobHRP = Mob:FindFirstChild("HumanoidRootPart")
+	local MobHRP = getgenv().MobObject:FindFirstChild("HumanoidRootPart")
 
 	if not Character then
 		return
 	end
-	
+
 	if not MobHRP then
 		return
 	end
 
-	Character:PivotTo(Mob.HumanoidRootPart.CFrame * ConvertSettingsToCFrame())
+	Character:PivotTo(getgenv().MobObject.HumanoidRootPart.CFrame * ConvertSettingsToCFrame())
 end
 
 local function TakeQuest()
@@ -130,14 +127,8 @@ end)
 task.spawn(function()
 	while true do
 		if getgenv().AutoFarm == true then
-			if getgenv().MobObject ~= nil or getgenv().MobObject ~= "None" then
-				TeleportToMob(getgenv().MobObject)
-				if getgenv().MobObject.HealthBar.Frame.HPBar.Fill.Bar.Size.Scale.X == 0 then
-					getgenv().MobObject = GetMobs()
-				end
-			elseif getgenv().MobObject == nil or getgenv().MobObject == "None" then
-				getgenv().MobObject = GetMobs()
-			end
+			GetMobs()
+			TeleportToMob()
 		end
 		task.wait()
 	end
