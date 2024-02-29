@@ -66,9 +66,12 @@ end
 local function GetMobs()
 	for _, value in getgenv().Mobs do
 		local Mobs = MobsFolder:FindFirstChild(value)
-		if Mobs and Mobs.HealthBar.Frame.HPBar.Fill.Bar.X.Scale > 0 then
-			getgenv().MobObject = Mobs
-			break
+		if Mobs and Mobs.HealthBar.Frame.HPBar.Fill.Bar.X.Scale >= 0 then
+			local HealthBar = Mobs:FindFirstChild("HealthBar")
+			if HealthBar and HealthBar.Frame.HPBar.Fill.Bar.X.Scale >= 0 then
+				getgenv().MobObject = Mobs
+				break
+			end
 		end
 	end
 end
