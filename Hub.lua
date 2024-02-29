@@ -105,22 +105,6 @@ local function FinishQuest()
 	Event:FireServer(getgenv().Quest)
 end
 
-local function GetMob()
-	for _, value in pairs(MobsFolder:GetChildren()) do
-		for _, value2 in getgenv().Mobs do
-			if value.Name:find(value2) then
-				local HumanoidRootPart = value:FindFirstChild("HumanoidRootPart")
-				local HealthBar = value:FindFirstChild("Healthbar")
-				if HumanoidRootPart and HealthBar then
-					getgenv().MobObject = value
-					break
-				end
-			end
-
-		end
-	end
-end
-
 
 
 
@@ -152,12 +136,17 @@ end)
 task.spawn(function()
 	while true do
 		if getgenv().AutoFarm == true then
-			if getgenv().MobObject == nil then
-				GetMob()
-			elseif getgenv().MobObject ~= nil and not getgenv().MobObject:FindFirstChild("Healthbar") then
-				GetMob()
-			elseif getgenv().MobObject ~= nil and getgenv().MobObject:FindFirstChild("Healthbar") then
-				TeleportToMob(getgenv().MobObject)
+			for _, value in pairs(MobsFolder:GetChildren()) do
+				for _, value2 in getgenv().Mobs do
+					if value.Name:find(value2) then
+						local HumanoidRootPart = value:FindFirstChild("HumanoidRootPart")
+						local HealthBar = value:FindFirstChild("Healthbar")
+						if HumanoidRootPart and HealthBar then
+							TeleportToMob(value)
+						end
+					end
+		
+				end
 			end
 		end
 		task.wait()
