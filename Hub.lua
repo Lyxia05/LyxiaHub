@@ -134,7 +134,7 @@ task.spawn(function()
 				local Mobs = MobsFolder:FindFirstChild(value) or MobsFolder:FindFirstChild("Giant " .. value)
 				if Mobs then
 					local HumanoidRootPart = Mobs:FindFirstChild("HumanoidRootPart")
-					local HealthBar = Mobs:FindFirstChild("HealthBar")
+					local HealthBar = Mobs:FindFirstChild("Healthbar")
 					if HumanoidRootPart and HealthBar then
 						TeleportToMob(Mobs)
 					end
