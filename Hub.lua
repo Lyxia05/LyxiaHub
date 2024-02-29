@@ -67,11 +67,7 @@ local function GetMobs()
 	for _, value in getgenv().Mobs do
 		local Mobs = MobsFolder:FindFirstChild(value)
 		if Mobs then
-			local HealthBar = Mobs:FindFirstChild("HealthBar")
-			if HealthBar and HealthBar.Frame.HPBar.Fill.Bar.X.Scale >= 0 then
-				getgenv().MobObject = Mobs
-				break
-			end
+			getgenv().MobObject = Mobs
 		end
 	end
 end
@@ -131,7 +127,9 @@ task.spawn(function()
 	while true do
 		if getgenv().AutoFarm == true then
 			GetMobs()
-			TeleportToMob()
+			if typeof(getgenv().MobObject) == "Instance" and getgenv().MobObject ~= nil then
+				TeleportToMob()
+			end
 		end
 		task.wait()
 	end
