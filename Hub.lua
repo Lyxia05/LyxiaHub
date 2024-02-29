@@ -67,7 +67,7 @@ local function KillMob()
 			end
 		end
 	end
-	Evend:FireServer(result)
+	Event:FireServer(result)
 end
 
 local function GetMobs()
