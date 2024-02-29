@@ -1,13 +1,13 @@
 --
 getgenv().Type = "Above"
-getgenv().Studs = 10
+getgenv().Studs = 5
 getgenv().Mobs = {"None"}
 getgenv().Quest = 0
 getgenv().AutoFarm = false
 getgenv().AutoQuest = false
 getgenv().KillAura = false
 getgenv().AutoCollect = false
-getgenv().KillAuraDelay = 0.5
+getgenv().KillAuraDelay = 0.25
 getgenv().MobObject = nil
 
 
@@ -233,7 +233,7 @@ local AutofarmStudsSlider = AutofarmTab:CreateSlider({
 	Name = "Studs",
 	Range = {1, 10},
 	Increment = 1,
-	CurrentValue = 10,
+	CurrentValue = 5,
 	Flag = "StudsSlider",
 	Callback = function(Value)
 		getgenv().Studs = Value
@@ -264,7 +264,7 @@ local killauraDelaySlider = AutofarmTab:CreateSlider({
 	Name = "Delay",
 	Range = {0.2, 0.5},
 	Increment = 0.01,
-	CurrentValue = 0.5,
+	CurrentValue = 0.25,
 	Flag = "KADelay",
 	Callback = function(Value)
 		getgenv().KillAuraDelay = Value
