@@ -175,7 +175,7 @@ local Window = RayfieldLibrary:CreateWindow({
 	LoadingTitle = "Swordburst 3",
 	LoadingSubtitle = "by Lyxia",
 	ConfigurationSaving = {
-		Enabled = false,
+		Enabled = true,
 		FolderName = "LyxiaHub", -- Create a custom folder for your hub/game
 		FileName = "Config"
 	},
