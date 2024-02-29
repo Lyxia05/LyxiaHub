@@ -8,7 +8,7 @@ getgenv().AutoQuest = false
 getgenv().KillAura = false
 getgenv().AutoCollect = false
 getgenv().KillAuraDelay = 0.5
-getgenv().MobObject = "None"
+getgenv().MobObject = nil
 
 
 --
@@ -99,6 +99,21 @@ local function FinishQuest()
 	Event:FireServer(getgenv().Quest)
 end
 
+local function GetMob()
+	for _, value in pairs(MobsFolder:GetChildren()) do
+		for _, value2 in getgenv().Mobs do
+			if value.Name:find(value2) then
+				local HumanoidRootPart = value:FindFirstChild("HumanoidRootPart")
+				local HealthBar = value:FindFirstChild("Healthbar")
+				if HumanoidRootPart and HealthBar then
+					getgenv().MobObject = value
+				end
+			end
+
+		end
+	end
+end
+
 
 
 
@@ -130,17 +145,12 @@ end)
 task.spawn(function()
 	while true do
 		if getgenv().AutoFarm == true then
-			for _, value in pairs(MobsFolder:GetChildren()) do
-				for _, value2 in getgenv().Mobs do
-					if value.Name:find(value2) then
-						local HumanoidRootPart = value:FindFirstChild("HumanoidRootPart")
-						local HealthBar = value:FindFirstChild("Healthbar")
-						if HumanoidRootPart and HealthBar then
-							TeleportToMob(value)
-						end
-					end
-
-				end
+			if getgenv.MobObject() == nil then
+				GetMob()
+			elseif getgenv.MobObject() ~= nil and not getgenv().MobObject:FindFirstChild("Healthbar") then
+				GetMob()
+			elseif getgenv.MobObject ~= nil and getgenv().MobObject:FindFirstChild("Healthbar") then
+				TeleportToMob(getgenv().MobObject)
 			end
 		end
 		task.wait()
@@ -234,7 +244,7 @@ local AutofarmTypeDropdown =AutofarmTab:CreateDropdown({
 	MultipleOptions = false,
 	Flag = "TypeDropDown",
 	Callback = function(Option)
-		getgenv().Type = Option
+		getgenv().Type = Option[1]
 	end,
 })
 
