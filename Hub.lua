@@ -19,7 +19,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
 --
-local MobsFolder : Folder = workspace.Mobs
+local MobsFolder = workspace.Mobs
 
 
 
@@ -84,14 +84,14 @@ local function ConvertSettingsToCFrame()
 	end
 end
 
-local function TeleportToMob( Mob : Instance )
+local function TeleportToMob( Mob )
 	local Character = GetCharacter()
 	local MobHRP = Mob:FindFirstChild("HumanoidRootPart")
 
 	if not Character then
 		return
 	end
-
+	
 	if not MobHRP then
 		return
 	end
@@ -109,7 +109,7 @@ local function FinishQuest()
 	Event:FireServer(getgenv().Quest)
 end
 
-local function LootItems( Items : Instance )
+local function LootItems( Items )
 	local Event = game:GetService("ReplicatedStorage").Systems.Drops.Pickup
 	Event:FireServer(Items)
 end
@@ -132,15 +132,12 @@ task.spawn(function()
 		if getgenv().AutoFarm == true then
 			if getgenv().MobObject ~= nil or getgenv().MobObject ~= "None" then
 				TeleportToMob(getgenv().MobObject)
-
 				if getgenv().MobObject.HealthBar.Frame.HPBar.Fill.Bar.Size.Scale.X == 0 then
 					getgenv().MobObject = GetMobs()
 				end
-
-			else getgenv().MobObject == nil or getgenv().MobObject == "None" then
+			elseif getgenv().MobObject == nil or getgenv().MobObject == "None" then
 				getgenv().MobObject = GetMobs()
 			end
-
 		end
 		task.wait()
 	end
