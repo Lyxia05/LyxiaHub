@@ -55,19 +55,12 @@ local function GetCharacter()
 end
 
 local function KillMob()
-	local result = {}
 	local Event = game:GetService("ReplicatedStorage").Systems.Combat.PlayerAttack
-	for index, mob in pairs(MobsFolder:GetChildren()) do
-		local Character = GetCharacter()
-		local MobHRP = mob:FindFirstChild("HumanoidRootPart")
-		if Character and MobHRP then
-			local Range = (Character.HumanoidRootPart.Position - MobHRP.Position).Magnitude
-			if Range <= 50 then
-				table.insert(result, mob)
-			end
-		end
+	if getgenv().MobObject ~= nil then
+		Event:FireServer({
+			getgenv().MobObject
+		})
 	end
-	Event:FireServer(result)
 end
 
 local function GetMobs()
