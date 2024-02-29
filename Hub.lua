@@ -157,7 +157,7 @@ end)
 task.spawn(function()
 	while true do
 		if getgenv().AutoQuest == true then
-			if ReplicatedStorage.Profile[LocalPlayer.Name].Quest.Active.Count >= 5 then
+			if ReplicatedStorage.Profiles[LocalPlayer.Name].Quest.Active.Count >= 5 then
 				FinishQuest()
 			end
 			TakeQuest()
