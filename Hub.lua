@@ -99,35 +99,6 @@ local function FinishQuest()
 	Event:FireServer(getgenv().Quest)
 end
 
-local function AutoFarm()
-	if getgenv().AutoFarm == false then
-		return
-	end
-
-	for _, value in pairs(MobsFolder:GetChildren()) do
-		if value.Name:match(getgenv().Mobs[1]) then
-			local MobHRP = value:FindFirstChild("HumanoidRootPart")
-			if MobHRP and MobHRP.Transparency == 0 then
-				TeleportToMob(value)
-			end
-		end
-	end
-end
-
-local function KillAura()
-	if getgenv().KillAura == false then
-		return
-	end
-
-	KillMob()
-	task.wait(getgenv().KillAuraDelay)
-end
-
-local function AutoQuest()
-	TakeQuest()
-	FinishQuest()
-end
-
 
 
 
@@ -147,25 +118,34 @@ end)
 
 -- Kill Aura Loops
 task.spawn(function()
-	while true do
-		KillAura()
-		task.wait()
+	while getgenv().KillAura == true do
+		KillMob()
+		task.wait(getgenv().KillAuraDelay)
 	end
 end)
 
 -- Auto Farm Loops
 task.spawn(function()
-	while true do
-		AutoFarm()
+	while getgenv().AutoFarm == true do
+		for _, value in getgenv().Mobs do
+			local Mobs = MobsFolder:FindFirstChild(value) or MobsFolder:FindFirstChild("Giant " .. value)
+			if Mobs then
+				local HumanoidRootPart = Mobs:FindFirstChild("HumanoidRootPart")
+				if HumanoidRootPart and HumanoidRootPart.Transparency == 0 then
+					TeleportToMob(Mobs)
+				end
+			end
+		end
 		task.wait()
 	end
 end)
 
 -- Auto Quest Loops
 task.spawn(function()
-	while true do
-		AutoQuest()
-		task.wait(1)
+	while getgenv().AutoQuest == true do
+		TakeQuest()
+		FinishQuest()
+		task.wait()
 	end
 end)
 
