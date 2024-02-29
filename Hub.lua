@@ -55,11 +55,11 @@ local function GetCharacter()
 end
 
 local function KillMob()
+	local Event = game:GetService("ReplicatedStorage").Systems.Combat.PlayerAttack
 	for index, mob in pairs(MobsFolder:GetChildren()) do
 		local Character = GetCharacter()
 		if Character then
 			local Range = (Character.HumanoidRootPart.Position - mob.HumanoidRootPart.Position).Magnitude
-			print(mob, Range)
 			if Range <= 50 then
 				Event:FireServer(mob)
 			end
@@ -121,7 +121,7 @@ task.spawn(function()
 		if getgenv().KillAura == true then
 			KillMob()
 		end
-		task.wait(getgenv().KillAuraDelay)
+		task.wait(getgenv(.KillAuraDelay))
 	end
 end)
 
