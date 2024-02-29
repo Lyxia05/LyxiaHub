@@ -121,7 +121,6 @@ task.spawn(function()
 	while true do
 		if getgenv().KillAura == true then
 			KillMob()
-			print("Hello")
 		end
 		task.wait(getgenv().KillAuraDelay)
 	end
@@ -135,7 +134,7 @@ task.spawn(function()
 				local Mobs = MobsFolder:FindFirstChild(value) or MobsFolder:FindFirstChild("Giant " .. value)
 				if Mobs then
 					local HumanoidRootPart = Mobs:FindFirstChild("HumanoidRootPart")
-					if HumanoidRootPart and HumanoidRootPart.Transparency == 0 then
+					if HumanoidRootPart then
 						TeleportToMob(Mobs)
 					end
 				end
