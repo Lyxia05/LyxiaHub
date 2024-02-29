@@ -111,12 +111,20 @@ local function FinishQuest()
 	Event:FireServer(getgenv().Quest)
 end
 
-local function LootItems( Items )
+
+-- Auto Loot
+ReplicatedStorage.Drops.ChildAdded:Connect(function(child)
+	if getgenv().AutoCollect == false then
+		return
+	end
+
+	if not child:IsA("Folder") then
+		return
+	end
+
 	local Event = game:GetService("ReplicatedStorage").Systems.Drops.Pickup
-	Event:FireServer(Items)
-end
-
-
+	Event:FireServer(child)
+end)
 
 -- Kill Aura Loops
 task.spawn(function()
