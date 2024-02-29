@@ -59,6 +59,7 @@ local function KillMob()
 		local Character = GetCharacter()
 		if Character then
 			local Range = (Character.HumanoidRootPart.Position - mob.HumanoidRootPart.Position).Magnitude
+			print(mob, Range)
 			if Range <= 50 then
 				Event:FireServer(mob)
 			end
