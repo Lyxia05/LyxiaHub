@@ -145,11 +145,11 @@ end)
 task.spawn(function()
 	while true do
 		if getgenv().AutoFarm == true then
-			if getgenv.MobObject() == nil then
+			if getgenv().MobObject == nil then
 				GetMob()
-			elseif getgenv.MobObject() ~= nil and not getgenv().MobObject:FindFirstChild("Healthbar") then
+			elseif getgenv().MobObject ~= nil and not getgenv().MobObject:FindFirstChild("Healthbar") then
 				GetMob()
-			elseif getgenv.MobObject ~= nil and getgenv().MobObject:FindFirstChild("Healthbar") then
+			elseif getgenv().MobObject ~= nil and getgenv().MobObject:FindFirstChild("Healthbar") then
 				TeleportToMob(getgenv().MobObject)
 			end
 		end
