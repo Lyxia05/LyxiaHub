@@ -17,7 +17,7 @@ local function KillAura()
         if Mobs ~= nil then
             KillAuraEvent:FireServer({Mobs})
         end
-        task.wait(0.3)
+        task.wait(0.25)
     end
 end
 
