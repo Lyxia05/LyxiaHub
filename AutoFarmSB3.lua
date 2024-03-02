@@ -23,12 +23,12 @@ end
 
 local function AutoFarm()
     while true do
-        AcceptEvent:FireServer(24)
-        CompleteEvent:FireServer(24)
+        AcceptEvent:FireServer(29)
+        CompleteEvent:FireServer(29)
         for index, value in pairs(MobsFolder:GetChildren()) do
-            if value.Name:find('Hell') then
+            if value.Name:find('Kitsune') then
                 local Character = GetCharacter()
-                if Character then
+                if Character and Character:FindFirstChild("HumanoidRootPart") then
                     if value:FindFirstChild("HumanoidRootPart") and value:FindFirstChild("Healthbar") then
                         Character.HumanoidRootPart.CFrame = value.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
                         Mobs = value
