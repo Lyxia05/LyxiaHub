@@ -23,8 +23,8 @@ end
 
 local function AutoFarm()
     while true do
-        AcceptEvent:FireServer(29)
-        CompleteEvent:FireServer(29)
+        AcceptEvent:FireServer(34)
+        CompleteEvent:FireServer(34)
         for index, value in pairs(MobsFolder:GetChildren()) do
             if value.Name:find('Mammoth') then
                 local Character = GetCharacter()
