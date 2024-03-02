@@ -26,7 +26,7 @@ local function AutoFarm()
         AcceptEvent:FireServer(29)
         CompleteEvent:FireServer(29)
         for index, value in pairs(MobsFolder:GetChildren()) do
-            if value.Name:find('Kitsune') then
+            if value.Name:find('Mammoth') then
                 local Character = GetCharacter()
                 if Character and Character:FindFirstChild("HumanoidRootPart") then
                     if value:FindFirstChild("HumanoidRootPart") and value:FindFirstChild("Healthbar") then
