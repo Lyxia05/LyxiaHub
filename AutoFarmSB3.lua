@@ -21,20 +21,31 @@ local function KillAura()
     end
 end
 
+local function GetMobs()
+    for index, value in pairs(MobsFolder:GetChildren()) do
+        if value.Name:find('Mammoth') then
+            if value:FindFirstChild("HumanoidRootPart") and value:FindFirstChild("Healthbar") then
+                Mobs = value
+                break
+            end
+        end
+    end
+end
+
 local function AutoFarm()
     while true do
         AcceptEvent:FireServer(33)
         CompleteEvent:FireServer(33)
-        for index, value in pairs(MobsFolder:GetChildren()) do
-            if value.Name:find('Mammoth') then
-                local Character = GetCharacter()
-                if Character and Character:FindFirstChild("HumanoidRootPart") then
-                    if value:FindFirstChild("HumanoidRootPart") and value:FindFirstChild("Healthbar") then
-                        Character.HumanoidRootPart.CFrame = value.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
-                        Mobs = value
-                    end
-                end
+
+        if Mobs == nil then
+            GetMobs()
+        elseif Mobs ~= nil and Mobs:FindFirstChild("HumanoidRootPart") and Mobs:FindFirstChild("Healthbar") then
+            local Character = GetCharacter()
+            if Character and Character:FindFirstChild("HumanoidRootPart") then
+                Character.HumanoidRootPart.CFrame = Mobs.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
             end
+        elseif Mobs ~= nil and not Mobs:FindFirstChild("Healthbar") then
+            GetMobs()
         end
         task.wait()
     end
