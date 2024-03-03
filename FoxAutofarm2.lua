@@ -67,11 +67,11 @@ LocalPlayer.Idled:Connect(function()
 	game:GetService("VirtualUser"):ClickButton2(Vector2.new())
 end)
 
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3019, 250, -133)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame) = CFrame.new(-251, 100, -1165)
 
 game.Players.LocalPlayer.CharacterAdded:Connect(function()
   wait(3)
-  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3019, 250, -133)
+  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame) = CFrame.new(-251, 100, -1165)
 end)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
