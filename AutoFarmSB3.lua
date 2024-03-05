@@ -23,7 +23,7 @@ end
 
 local function GetMobs()
     for index, value in pairs(MobsFolder:GetChildren()) do
-        if value.Name:find('Mammoth') then
+        if value.Name:find('Kitsu') then
             if value:FindFirstChild("HumanoidRootPart") and value:FindFirstChild("Healthbar") then
                 Mobs = value
                 break
