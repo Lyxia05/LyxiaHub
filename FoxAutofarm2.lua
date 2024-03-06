@@ -51,7 +51,7 @@ local function AutoFarm()
         AcceptEvent:FireServer(29)
         CompleteEvent:FireServer(29)
 
-	if os.clock - Time >= 10 then
+	if os.clock() - Time >= 10 then
 		GetMobs()
 	end
 
