@@ -7,6 +7,7 @@ local CompleteEvent = ReplicatedStorage.Systems.Quests.CompleteQuest
 local AcceptEvent = ReplicatedStorage.Systems.Quests.AcceptQuest
 
 local Mobs = nil
+local Time = os.clock()
 
 local result = {}
 
@@ -38,6 +39,7 @@ local function GetMobs()
         if value.Name:find('Kitsu') then
             if value:FindFirstChild("HumanoidRootPart") and value:FindFirstChild("Healthbar") then
                 Mobs = value
+		Time = os.clock()
                 break
             end
         end
@@ -48,6 +50,10 @@ local function AutoFarm()
     while true do
         AcceptEvent:FireServer(29)
         CompleteEvent:FireServer(29)
+
+	if os.clock - Time >= 10 then
+		GetMobs()
+	end
 
         if Mobs == nil then
             GetMobs()
