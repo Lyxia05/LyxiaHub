@@ -8,15 +8,27 @@ local AcceptEvent = ReplicatedStorage.Systems.Quests.AcceptQuest
 
 local Mobs = nil
 
+local result = {}
+
 local function GetCharacter()
 	return LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 end
 
 local function KillAura()
     while true do
-        if Mobs ~= nil then
-            KillAuraEvent:FireServer({Mobs})
+        table.clear(result)
+        for index, value in pairs(MobsFolder:GetChildren()) do
+            if value:FindFirstChild("HumanoidRootPart") and value:FindFirstChild("Healthbar") then
+                local Character = GetCharacter()
+                if Character and Character:FindFirstChild("HumanoidRootPart") then
+                    local Distance = (Character.HumanoidRootPart.Position - value.HumanoidRootPart.Position).Magnitude
+                    if Distance <= 40 then
+                        table.insert(result, value)
+                    end
+                end
+            end
         end
+        KillAuraEvent:FireServer(result)
         task.wait(0.3)
     end
 end
@@ -42,7 +54,7 @@ local function AutoFarm()
         elseif Mobs ~= nil and Mobs:FindFirstChild("HumanoidRootPart") and Mobs:FindFirstChild("Healthbar") then
             local Character = GetCharacter()
             if Character and Character:FindFirstChild("HumanoidRootPart") then
-                Character.HumanoidRootPart.CFrame = Mobs.HumanoidRootPart.CFrame * CFrame.new(0, -5, 0)
+                Character.HumanoidRootPart.CFrame = Mobs.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
             end
         elseif Mobs ~= nil and not Mobs:FindFirstChild("Healthbar") then
             GetMobs()
