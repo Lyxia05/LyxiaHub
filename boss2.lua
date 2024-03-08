@@ -17,20 +17,16 @@ end
 
 local function KillAura()
     while true do
-        table.clear(result)
-        for index, value in pairs(MobsFolder:GetChildren()) do
-            if value:FindFirstChild("HumanoidRootPart") and value:FindFirstChild("Healthbar") then
-                local Character = GetCharacter()
-                if Character and Character:FindFirstChild("HumanoidRootPart") then
-                    local Distance = (Character.HumanoidRootPart.Position - value.HumanoidRootPart.Position).Magnitude
-                    if Distance <= 40 then
-                        table.insert(result, value)
-                    end
+        if Mobs ~= nil then
+            local Character = GetCharacter()
+            if Character and Character:FindFirstChild("HumanoidRootPart") and Mobs:FindFirstChild("HumanoidRootPart") and Mobs:FindFirstChild("Healthbar") then
+                local Distance = (Character.HumanoidRootPart.Position - Mobs.HumanoidRootPart.Position).Magnitude
+                if Distance <= 40 then
+                    KillAuraEvent:FireServer({Mobs})
                 end
             end
         end
-        KillAuraEvent:FireServer(result)
-        task.wait(0.3)
+        task.wait(0.25)
     end
 end
 
