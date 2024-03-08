@@ -60,7 +60,7 @@ local function AutoFarm()
         elseif Mobs ~= nil and Mobs:FindFirstChild("HumanoidRootPart") and Mobs:FindFirstChild("Healthbar") then
             local Character = GetCharacter()
             if Character and Character:FindFirstChild("HumanoidRootPart") then
-                Character.HumanoidRootPart.CFrame = Mobs.HumanoidRootPart.CFrame * CFrame.new(0, -15, 0)
+                Character.HumanoidRootPart.CFrame = Mobs.HumanoidRootPart.CFrame * CFrame.new(0, 15, 0)
             end
         elseif Mobs ~= nil and not Mobs:FindFirstChild("Healthbar") then
             GetMobs()
