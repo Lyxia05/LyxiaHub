@@ -53,13 +53,15 @@ local function AutoFarm()
 
         if Mobs == nil then
             GetMobs()
+	    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.BossArenas["Elize The Siren"].Spawn.CFrame * CFrame.new(0, -40, 0)
         elseif Mobs ~= nil and Mobs:FindFirstChild("HumanoidRootPart") and Mobs:FindFirstChild("Healthbar") then
             local Character = GetCharacter()
             if Character and Character:FindFirstChild("HumanoidRootPart") then
-                Character.HumanoidRootPart.CFrame = Mobs.HumanoidRootPart.CFrame * CFrame.new(0, 10, 0)
+                Character.HumanoidRootPart.CFrame = Mobs.HumanoidRootPart.CFrame * CFrame.new(0, -40, 0)
             end
         elseif Mobs ~= nil and not Mobs:FindFirstChild("Healthbar") then
             GetMobs()
+	    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.BossArenas["Elize The Siren"].Spawn.CFrame * CFrame.new(0, -40, 0)
         end
         task.wait()
     end
