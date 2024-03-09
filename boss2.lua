@@ -89,3 +89,11 @@ game.Players.LocalPlayer.CharacterAdded:Connect(function()
   wait(3)
   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.BossArenas["Elize The Siren"].Spawn.CFrame
 end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	for _,v in pairs(workspace.Characters:Descendants()) do
+			if v:IsA("BasePart") then
+			v.CanCollide = false
+			end
+		end
+end)
